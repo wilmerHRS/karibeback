@@ -6,6 +6,7 @@ import {
   createOpProducto,
   updateOpProducto,
   deleteOpProducto,
+  getAllByProductoId,
 } from "../controllers/opcionProducto.controller.js";
 import {
   opProductoDataValidator,
@@ -17,7 +18,7 @@ const router = Router();
 
 //TODO: Opciones Productos
 router.get("/", getAllOpProductos);
-// router.get("/productos/:id", productoIdValidator, getOpProductoById);
+router.get("/productos/:id", productoIdValidator, getAllByProductoId);
 router.post(
   "/productos/:id",
   productoIdValidator,
