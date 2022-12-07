@@ -1,0 +1,3589 @@
+openapi: 3.0.3
+info:
+  title: Backend API example
+  description: Backend API example API declaration
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: wilmer.reluz.salvador@gmail.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io
+servers:
+  - url: /api/v1
+
+tags:
+  - name: greeting
+    description: Greeting APIs
+
+paths:
+  /rol:
+    get:
+      tags:
+        - Rol
+      operationId: rolGetAll
+      summary: Retorna información de los Roles.
+      description: Retorna toda la informacion de los Roles, permite recibir query params para paginación
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseAll"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      tags:
+        - Rol
+      operationId: rolCreate
+      summary: Crea un nuevo Rol.
+      description: Crea un nuevo rol y retorna la información del rol creado.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RolRequest"
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RolResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /rol/{id}:
+    get:
+      tags:
+        - Rol
+      operationId: rolGetById
+      summary: Retorna información de un Rol.
+      description: Retorna toda la informacion solo un rol
+      parameters:
+        - name: id
+          in: path
+          description: ID de Rol
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RolResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags:
+        - Rol
+      operationId: rolUpdate
+      summary: Actualizar un Rol.
+      description: Actualizar un rol y retorna la información del rol actualizado.
+      parameters:
+        - name: id
+          in: path
+          description: ID de Rol
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RolRequest"
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/RolResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      tags:
+        - Rol
+      operationId: rolDelete
+      summary: Elimina un Rol.
+      description: Elimna un Rol mediante el id enviado por parametro en "path"
+      parameters:
+        - name: id
+          in: path
+          description: ID de Rol
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseGlobal"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /local:
+    get:
+      tags:
+        - Local
+      operationId: localGetAll
+      summary: Retorna información de los Locales.
+      description: Retorna toda la informacion de los Locales, permite recibir query params para paginación
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseAll"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      tags:
+        - Local
+      operationId: localCreate
+      summary: Crea un nuevo Local.
+      description: Crea un nuevo local y retorna la información del local creado.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LocalRequest"
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LocalResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /local/{id}:
+    get:
+      tags:
+        - Local
+      operationId: localGetById
+      summary: Retorna información de un Local.
+      description: Retorna toda la informacion solo un local
+      parameters:
+        - name: id
+          in: path
+          description: ID de Local
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LocalResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags:
+        - Local
+      operationId: localUpdate
+      summary: Actualizar un Local.
+      description: Actualizar un local y retorna la información del local actualizado.
+      parameters:
+        - name: id
+          in: path
+          description: ID de Local
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LocalRequest"
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LocalResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      tags:
+        - Local
+      operationId: localDelete
+      summary: Elimina un Local.
+      description: Elimna un Local mediante el id enviado por parametro en "path"
+      parameters:
+        - name: id
+          in: path
+          description: ID de Local
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseGlobal"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /empleado:
+    get:
+      tags:
+        - Empleado
+      operationId: empleadoGetAll
+      summary: Retorna información de los Empleados.
+      description: Retorna toda la informacion de los Empleados, permite recibir query params para paginación
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseAll"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      tags:
+        - Empleado
+      operationId: empleadoCreate
+      summary: Crea un nuevo Empleado.
+      description: Crea un nuevo empleado y retorna la información del empleado creado.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EmpleadoRequest"
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmpleadoResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /empleado/{id}:
+    get:
+      tags:
+        - Empleado
+      operationId: empleadoGetById
+      summary: Retorna información de un Empleado.
+      description: Retorna toda la informacion solo un Empleado.
+      parameters:
+        - name: id
+          in: path
+          description: ID de Empleado
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmpleadoResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags:
+        - Empleado
+      operationId: empleadoUpdate
+      summary: Actualizar un Empleado.
+      description: Actualizar un empleado y retorna la información del empleado actualizado.
+      parameters:
+        - name: id
+          in: path
+          description: ID de Empleado
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EmpleadoRequest"
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EmpleadoResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      tags:
+        - Empleado
+      operationId: empleadoDelete
+      summary: Elimina un Empleado.
+      description: Elimna un Empleado mediante el id enviado por parametro en "path"
+      parameters:
+        - name: id
+          in: path
+          description: ID de Empleado
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseGlobal"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /cuenta:
+    get:
+      tags:
+        - Cuenta
+      operationId: cuentaGetAll
+      summary: Retorna información de los Cuentas.
+      description: Retorna toda la informacion de las Cuentas, permite recibir query params para paginación
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseAll"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /cuenta/empleado/{id}:
+    get:
+      tags:
+        - Cuenta
+      operationId: cuentaGetById
+      summary: Retorna información de una Cuenta.
+      description: Retorna toda la informacion solo una Cuenta
+      parameters:
+        - name: id
+          in: path
+          description: ID de Empleado
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CuentaResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      tags:
+        - Cuenta
+      operationId: cuentaCreate
+      summary: Crea una cuenta con el ID de Empleado.
+      description: Crea una nueva Cuenta utilizando el ID de Empleado pasado por el "path" y retorna la información de la Cuenta creada.
+      parameters:
+        - name: id
+          in: path
+          description: ID de Empleado
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CuentaResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /cuenta/empleado/{id}/suspender:
+    post:
+      tags:
+        - Cuenta
+      operationId: cuentaSuspend
+      summary: Suspende una Cuenta con el ID de Empleado.
+      description: Suspende una Cuenta utilizando el ID de Empleado pasado por el "path" y retorna un mensaje si se ha suspendido.
+      parameters:
+        - name: id
+          in: path
+          description: ID de Empleado
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseGlobal"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /cuenta/empleado/{id}/username:
+    put:
+      tags:
+        - Cuenta
+      operationId: cuentaUsernameUpdate
+      summary: Actualiza Nombre de Usuario de Cuenta.
+      description: Actualiza el Nombre de Usuario de Cuenta y retorna un mensaje si se ha actualizado correctamente.
+      parameters:
+        - name: id
+          in: path
+          description: ID de Empleado
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CuentaUsernameRequest"
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CuentaResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /cuenta/empleado/{id}/password:
+    put:
+      tags:
+        - Cuenta
+      operationId: cuentaPasswordUpdate
+      summary: Actualizar contraseña de Cuenta.
+      description: Actualizar la contraseña de Cuenta y retorna un mensaje si se ha actualizado correctamente.
+      parameters:
+        - name: id
+          in: path
+          description: ID de Empleado
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CuentaPasswordRequest"
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CuentaResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      operationId: authCreate
+      summary: Inicio de Sesión.
+      description: Recibe username y password para iniciar sesión, devulve un token para la verificación de sesión desde el frontend.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AuthRequest"
+      responses:
+        200:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /users/hello:
+    get:
+      summary: Retorna información de una Cuenta.
+      description: Returns 'Hello <name>/stranger!!!' to the caller
+      tags:
+        - greeting
+      operationId: hello
+      parameters:
+        - name: name
+          required: false
+          in: query
+          description: The name of a caller
+          schema:
+            type: string
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HelloResponse"
+
+  #* Paths de Producto
+  /productos:
+    get:
+      description: Retorna una lista de todos los productos
+      tags:
+        - Productos
+      operationId: GetAllProductos
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseAll"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      tags:
+        - Productos
+      operationId: AddProducto
+      summary: Crea un nuevo producto.
+      description: Crea un nuevo producto y retorna la información del producto creado.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductoRequest"
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductoResponse"
+        204:
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /productos/{id}:
+    get:
+      tags:
+        - Productos
+      operationId: GetProductoById
+      summary: Retorna información de un Producto.
+      description: Retorna toda la informacion de un producto.
+      parameters:
+        - name: id
+          in: path
+          description: ID de Producto
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductoResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags:
+        - Productos
+      operationId: UpdateProducto
+      summary: Actualiza un producto.
+      description: Actualiza un producto y retorna la información del producto actualizado.
+      parameters:
+        - name: id
+          in: path
+          description: ID de Producto
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProductoRequest"
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductoResponse"
+        204:
+          description: No Content
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      tags:
+        - Productos
+      operationId: DeleteProducto
+      summary: Elimina un nuevo producto de forma lógica.
+      description: Elimina un producto y retorna la información del producto eliminado.
+      parameters:
+        - name: id
+          in: path
+          description: ID de Producto
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Updatet
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductoResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  #* Paths de Opción Producto
+  /opciones-productos:
+    get:
+      tags:
+        - Opciones de Producto
+      operationId: getAllOpProductos
+      summary: Retorna información de los Cuentas.
+      description: Retorna toda la informacion de las Cuentas, permite recibir query params para paginación
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseAll"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /opciones-productos/productos/{id}:
+    get:
+      tags:
+        - Opciones de Producto
+      operationId: GetAllOpProductoByIdProduct
+      summary: Retorna información de un Producto.
+      description: Retorna una lista de todas las opciones de productos
+      parameters:
+        - name: id
+          in: path
+          description: ID de Opción de Producto
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseAll"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      tags:
+        - Opciones de Producto
+      operationId: createOpProducto
+      summary: Crea una nueva opción de producto.
+      description: Crea una nueva opción de producto y retorna su información.
+      parameters:
+        - name: id
+          in: path
+          description: ID de Opción de Producto
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OpcionProductoRequest"
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OpcionProductoResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /opciones-productos/{id}:
+    get:
+      tags:
+        - Opciones de Producto
+      operationId: GetOpcionProductoById
+      summary: Retorna información de una opcion de Producto.
+      description: Retorna toda la informacion de una opcion de producto.
+      parameters:
+        - name: id
+          in: path
+          description: ID de Opción de Producto
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OpcionProductoResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags:
+        - Opciones de Producto
+      operationId: UpdateOpcionProducto
+      summary: Actualiza una opción de producto.
+      description: Actualiza una opción de producto y retorna su información actualizada.
+      parameters:
+        - name: id
+          in: path
+          description: ID de OpcionProducto
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OpcionProductoRequest"
+      responses:
+        200:
+          description: Updatet
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProductoResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      tags:
+        - Opciones de Producto
+      operationId: DeleteOpcionProducto
+      summary: Elimina una opción de producto de forma lógica.
+      description: Elimina una opción de producto y retorna su información.
+      parameters:
+        - name: id
+          in: path
+          description: ID de OpcionProducto
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Updatet
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OpcionProductoResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  #* Paths de Opción local
+
+  /opciones-locales:
+    get:
+      description: Retorna una lista de todas las opciones de producto por Local
+      tags:
+        - Opciones de Producto Local
+      operationId: GetAllOpcionLocal
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseAll"
+  /opciones-locales/locales/{id}/opciones-productos/{id_opproducto}:
+    post:
+      tags:
+        - Opciones de Producto Local
+      operationId: AddOpcionLocal
+      summary: Crea una nueva opción de producto por local.
+      description: Crea una nueva opción de producto por local y retorna su información.
+      parameters:
+        - name: id
+          in: path
+          description: ID de Local
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: id_opproducto
+          in: path
+          description: ID de Producto
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OpcionLocalRequest"
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OpcionLocalResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /opciones-locales/{id}:
+    get:
+      tags:
+        - Opciones de Producto Local
+      operationId: GetOpcionLocalById
+      summary: Retorna información de una opcion de local.
+      description: Retorna toda la informacion de una opcion de local.
+      parameters:
+        - name: id
+          in: path
+          description: ID de Opción de local
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OpcionLocalResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags:
+        - Opciones de Producto Local
+      operationId: UpdateOpcionLocalById
+      summary: Actualiza una opción de producto de un local.
+      description: Actualiza una opción de producto de un local y retorna su información actualizada.
+      parameters:
+        - name: id
+          in: path
+          description: ID de OpcionLocal
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OpcionLocalRequestUpdate"
+      responses:
+        200:
+          description: Updatet
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OpcionLocalResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      tags:
+        - Opciones de Producto Local
+      operationId: DeleteOpcionLocal
+      summary: Elimina una opción de producto de un local de forma lógica.
+      description: Elimina una opción de producto de un local y retorna su información.
+      parameters:
+        - name: id
+          in: path
+          description: ID de OpcionLocal
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Updatet
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OpcionLocalResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  #* Enpoints de Tipo Orden
+  /tipo-orden:
+    get:
+      tags:
+        - Tipo Orden
+      operationId: tipoOrdenGetAll
+      summary: Retorna información de los Tipos Orden.
+      description: Retorna toda la informacion de los Tipos Orden, permite recibir query params para paginación
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseAll"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      tags:
+        - Tipo Orden
+      operationId: tipoOrdenCreate
+      summary: Crea un nuevo Tipo Orden.
+      description: Crea un nuevo Tipo Orden y retorna la información del Tipo Orden creado.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TipoOrdenRequest"
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TipoOrdenResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /tipo-orden/{id}:
+    get:
+      tags:
+        - Tipo Orden
+      operationId: tipoOrdenGetById
+      summary: Retorna información de un Tipo Orden.
+      description: Retorna toda la informacion solo un Tipo Orden
+      parameters:
+        - name: id
+          in: path
+          description: ID de Tipo Orden
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TipoOrdenResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags:
+        - Tipo Orden
+      operationId: tipoOrdenUpdate
+      summary: Actualizar un Tipo Orden.
+      description: Actualizar un Tipo Orden y retorna la información del Tipo Orden actualizado.
+      parameters:
+        - name: id
+          in: path
+          description: ID de Tipo Orden
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TipoOrdenRequest"
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TipoOrdenResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      tags:
+        - Tipo Orden
+      operationId: tipoOrdenDelete
+      summary: Elimina un Tipo Orden.
+      description: Elimna un Tipo Orden mediante el id enviado por parametro en "path"
+      parameters:
+        - name: id
+          in: path
+          description: ID de Tipo Orden
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseGlobal"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  #* Enpoints de Estado Detalle Orden
+  /estado-detalle-orden:
+    get:
+      tags:
+        - Estado Detalle Orden
+      operationId: estadoDOrdenGetAll
+      summary: Retorna información de los Estado del Detalle de Orden.
+      description: Retorna toda la informacion de los Estados del Detalle de Orden, permite recibir query params para paginación
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseAll"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      tags:
+        - Estado Detalle Orden
+      operationId: estadoDOrdenCreate
+      summary: Crea un nuevo Estado del Detalle de Orden.
+      description: Crea un nuevo Estado del Detalle de Orden y retorna la información del Estado del Detalle de Orden creado.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EstadoDOrdenRequest"
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EstadoDOrdenResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /estado-detalle-orden/{id}:
+    get:
+      tags:
+        - Estado Detalle Orden
+      operationId: estadoDOrdenGetById
+      summary: Retorna información de un Estado del Detalle de Orden.
+      description: Retorna toda la informacion solo un Estado del Detalle de Orden
+      parameters:
+        - name: id
+          in: path
+          description: ID de Tipo Orden
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EstadoDOrdenResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags:
+        - Estado Detalle Orden
+      operationId: tipoOrdenUpdate
+      summary: Actualizar un Estado del Detalle de Orden.
+      description: Actualizar un Estado del Detalle de Orden y retorna la información del Estado del Detalle de Orden actualizado.
+      parameters:
+        - name: id
+          in: path
+          description: ID de Tipo Orden
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EstadoDOrdenRequest"
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EstadoDOrdenResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      tags:
+        - Estado Detalle Orden
+      operationId: estadoDOrdenDelete
+      summary: Elimina un Estado del Detalle de Orden.
+      description: Elimna un Estado del Detalle de Orden mediante el id enviado por parametro en "path"
+      parameters:
+        - name: id
+          in: path
+          description: ID de Tipo Orden
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseGlobal"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  #* Enpoints de Mesa
+  /mesa:
+    get:
+      tags:
+        - Mesa
+      operationId: mesaGetAll
+      summary: Retorna información de las Mesas.
+      description: Retorna toda la informacion de las Mesas, permite recibir query params para paginación
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseAll"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /mesa/local/{id}:
+    post:
+      tags:
+        - Mesa
+      operationId: mesaCreate
+      summary: Crea una nueva Mesa.
+      description: Crea una nueva Mesa y retorna la información de la Mesa creada.
+      parameters:
+        - name: id
+          in: path
+          description: ID de Local
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ComandaDetalleRequest"
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ComandaResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /mesa/{id}:
+    get:
+      tags:
+        - Mesa
+      operationId: mesaGetById
+      summary: Retorna información de una Mesa.
+      description: Retorna toda la informacion solo de una Mesa
+      parameters:
+        - name: id
+          in: path
+          description: ID de Mesa
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MesaResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags:
+        - Mesa
+      operationId: mesaUpdate
+      summary: Actualizar una Mesa.
+      description: Actualizar una Mesa y retorna la información de la Mesa actualizada.
+      parameters:
+        - name: id
+          in: path
+          description: ID de Mesa
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/MesaRequest"
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MesaResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      tags:
+        - Mesa
+      operationId: mesaDelete
+      summary: Elimina una Mesa.
+      description: Elimna una Mesa mediante el id enviado por parametro en "path"
+      parameters:
+        - name: id
+          in: path
+          description: ID de Mesa
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseGlobal"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  #* Enpoints de Comanda
+  /comandas:
+    get:
+      tags:
+        - Comanda
+      operationId: comandaGetAll
+      summary: Retorna información de las Comanda.
+      description: Retorna toda la informacion de las Comanda, permite recibir query params para paginación
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseAll"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      tags:
+        - Comanda
+      operationId: comandaCreate
+      summary: Crea una nueva Comanda.
+      description: Crea una nueva Comanda y retorna la información de la Comanda creada.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ComandaRequest"
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ComandaResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /comandas/no-finalizadas/mesero:
+    get:
+      tags:
+        - Comanda
+      operationId: comandaNoFinalizadasGetAll
+      summary: Retorna información de las Comanda.
+      description: Retorna toda la informacion de las Comanda, permite recibir query params para paginación
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseAll"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /comandas/{id}/no-finalizadas/mesero:
+    get:
+      tags:
+        - Comanda
+      operationId: comandaNoFinalizadasGetById
+      summary: Retorna información de las Comanda.
+      description: Retorna toda la informacion de las Comanda, permite recibir query params para paginación
+      parameters:
+        - name: id
+          in: path
+          description: ID de Comanda
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  # /comandas/locales/{id}:
+  #   post:
+  #     tags:
+  #       - Mesa
+  #     operationId: mesaCreate
+  #     summary: Crea una nueva Mesa.
+  #     description: Crea una nueva Mesa y retorna la información de la Mesa creada.
+  #     parameters:
+  #       - name: id
+  #         in: path
+  #         description: ID de Local
+  #         required: true
+  #         schema:
+  #           type: integer
+  #           format: int64
+  #     requestBody:
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: "#/components/schemas/MesaRequest"
+  #     responses:
+  #       201:
+  #         description: Created
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/MesaResponse"
+  #       400:
+  #         description: Bad Request
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Error"
+  #       401:
+  #         description: Unauthorized
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Error"
+  #       403:
+  #         description: Forbidden
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Error"
+  #       404:
+  #         description: Not Found
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Error"
+  #       500:
+  #         description: Internal Server Error
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Error"
+  /comandas/{id}:
+    get:
+      tags:
+        - Comanda
+      operationId: comandaGetById
+      summary: Retorna información de una Comanda.
+      description: Retorna toda la informacion solo de una Comanda
+      parameters:
+        - name: id
+          in: path
+          description: ID de Comanda
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ComandaResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  #   put:
+  #     tags:
+  #       - Mesa
+  #     operationId: mesaUpdate
+  #     summary: Actualizar una Mesa.
+  #     description: Actualizar una Mesa y retorna la información de la Mesa actualizada.
+  #     parameters:
+  #       - name: id
+  #         in: path
+  #         description: ID de Mesa
+  #         required: true
+  #         schema:
+  #           type: integer
+  #           format: int64
+  #     requestBody:
+  #       content:
+  #         application/json:
+  #           schema:
+  #             $ref: "#/components/schemas/MesaRequest"
+  #     responses:
+  #       200:
+  #         description: Success
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/MesaResponse"
+  #       400:
+  #         description: Bad Request
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Error"
+  #       401:
+  #         description: Unauthorized
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Error"
+  #       403:
+  #         description: Forbidden
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Error"
+  #       404:
+  #         description: Not Found
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Error"
+  #       500:
+  #         description: Internal Server Error
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Error"
+  #   delete:
+  #     tags:
+  #       - Mesa
+  #     operationId: mesaDelete
+  #     summary: Elimina una Mesa.
+  #     description: Elimna una Mesa mediante el id enviado por parametro en "path"
+  #     parameters:
+  #       - name: id
+  #         in: path
+  #         description: ID de Mesa
+  #         required: true
+  #         schema:
+  #           type: integer
+  #           format: int64
+  #     responses:
+  #       200:
+  #         description: Success
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/ResponseGlobal"
+  #       400:
+  #         description: Bad Request
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Error"
+  #       401:
+  #         description: Unauthorized
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Error"
+  #       403:
+  #         description: Forbidden
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Error"
+  #       404:
+  #         description: Not Found
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Error"
+  #       500:
+  #         description: Internal Server Error
+  #         content:
+  #           application/json:
+  #             schema:
+  #               $ref: "#/components/schemas/Error"
+  # /comandas/locales:
+  /comandas/{id}/detalles:
+    post:
+      tags:
+        - Comanda
+      operationId: comandaDetalleCreate
+      summary: Crea un nuevo Detalle de Comanda.
+      description: Crea una nuevo Detalle de Comanda y retorna la información del Detalle Creado.
+      parameters:
+        - name: id
+          in: path
+          description: ID de Comanda
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ComandaDetalleRequest"
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ComandaDetalleResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  # /comandas/{id}/detalles/{id_detalle}:
+
+components:
+  schemas:
+    HelloResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - message
+      properties:
+        message:
+          type: string
+    RolRequest:
+      type: object
+      # required:
+      #   - titulo
+      properties:
+        titulo:
+          type: string
+    RolResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        payload:
+          type: object
+          properties:
+            id:
+              type: integer
+            titulo:
+              type: string
+            createAt:
+              type: string
+              format: date-time
+        message:
+          type: string
+    LocalRequest:
+      type: object
+      properties:
+        telefono:
+          type: string
+        descripcion:
+          type: string
+        ruc:
+          type: string
+        departamento:
+          type: string
+        provincia:
+          type: string
+        distrito:
+          type: string
+    LocalResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        payload:
+          type: object
+          properties:
+            id:
+              type: integer
+            telefono:
+              type: string
+            # descripcion:
+            #   type: string
+            ruc:
+              type: string
+            departamento:
+              type: string
+            provincia:
+              type: string
+            distrito:
+              type: string
+            createAt:
+              type: string
+              format: date-time
+        message:
+          type: string
+    EmpleadoRequest:
+      type: object
+      properties:
+        nombre:
+          type: string
+        ape_paterno:
+          type: string
+        ape_materno:
+          type: string
+        documento:
+          type: string
+        genero:
+          type: string
+        fecha_nacimiento:
+          type: string
+          format: date
+          description: Fecha de Nacimiento
+          example: "2020-01-20"
+        telefono:
+          type: string
+        correo:
+          type: string
+        rol_id:
+          type: integer
+        local_id:
+          type: integer
+    EmpleadoResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        payload:
+          type: object
+          properties:
+            id:
+              type: integer
+            nombre:
+              type: string
+            ape_paterno:
+              type: string
+            documento:
+              type: string
+            genero:
+              type: string
+            fecha_nacimiento:
+              type: string
+              format: date
+              description: Fecha de Nacimiento
+              example: "2020-01-20"
+            createAt:
+              type: string
+              format: date-time
+        message:
+          type: string
+    CuentaUsernameRequest:
+      type: object
+      properties:
+        usuario:
+          type: string
+    CuentaPasswordRequest:
+      type: object
+      properties:
+        password:
+          type: string
+        newpasword:
+          type: string
+    CuentaResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        payload:
+          type: object
+          properties:
+            id:
+              type: integer
+            usuario:
+              type: string
+            createAt:
+              type: string
+              format: date-time
+        message:
+          type: string
+    AuthRequest:
+      type: object
+      properties:
+        usuario:
+          type: string
+        password:
+          type: string
+    AuthResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        payload:
+          type: object
+          properties:
+            token:
+              type: string
+            data:
+              type: object
+        message:
+          type: string
+
+    Response:
+      type: object
+      properties:
+        success:
+          type: boolean
+        payload:
+          type: object
+        message:
+          type: string
+    ResponseAll:
+      type: object
+      properties:
+        success:
+          type: boolean
+        payload:
+          type: array
+        message:
+          type: string
+    ResponseGlobal:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+    Error:
+      type: object
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+        errors:
+          type: array
+
+    # ? Schema de Productos
+    ProductoResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        payload:
+          type: object
+          properties:
+            id:
+              type: integer
+            titulo:
+              type: string
+            descripcion:
+              type: string
+            url:
+              type: string
+            de_cocina:
+              type: boolean
+        message:
+          type: string
+    ProductoRequest:
+      type: object
+      properties:
+        titulo:
+          type: string
+        descripcion:
+          type: string
+        url:
+          type: string
+        de_cocina:
+          type: boolean
+
+    OpcionProductoRequest:
+      type: object
+      properties:
+        titulo:
+          type: string
+        descripcion:
+          type: string
+        url:
+          type: string
+        precio_estandar:
+          type: number
+    OpcionProductoResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        payload:
+          type: object
+          properties:
+            id:
+              type: integer
+            titulo:
+              type: string
+            descripcion:
+              type: string
+            url:
+              type: string
+            precio_estandar:
+              type: number
+              multipleOf: 0.01
+            id_producto:
+              type: integer
+        message:
+          type: string
+
+    OpcionLocalRequest:
+      type: object
+      properties:
+        precio:
+          type: number
+        activo:
+          type: boolean
+    OpcionLocalRequestUpdate:
+      type: object
+      properties:
+        precio:
+          type: number
+        activo:
+          type: boolean
+        id_local:
+          type: number
+        id_opcion:
+          type: number
+    OpcionLocalResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        payload:
+          type: object
+          properties:
+            id:
+              type: integer
+            precio:
+              type: number
+            estado:
+              type: string
+            id_opcion:
+              type: integer
+            id_local:
+              type: integer
+        message:
+          type: string
+
+    # ? Schema de Tipo de Orden
+    TipoOrdenRequest:
+      type: object
+      properties:
+        titulo:
+          type: string
+    TipoOrdenResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        payload:
+          type: object
+          properties:
+            id:
+              type: integer
+            titulo:
+              type: string
+            createAt:
+              type: string
+              format: date-time
+        message:
+          type: string
+
+    # ? Schema de Estado Detalle Orden
+    EstadoDOrdenRequest:
+      type: object
+      properties:
+        titulo:
+          type: string
+    EstadoDOrdenResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        payload:
+          type: object
+          properties:
+            id:
+              type: integer
+            titulo:
+              type: string
+            createAt:
+              type: string
+              format: date-time
+        message:
+          type: string
+
+    # ? Schema de Estado Detalle Orden
+    MesaRequest:
+      type: object
+      properties:
+        nro_mesa:
+          type: string
+        capacidad:
+          type: integer
+        precio_reserva:
+          type: number
+        ocupado:
+          type: boolean
+    MesaResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        payload:
+          type: object
+          properties:
+            id:
+              type: integer
+            nro_mesa:
+              type: string
+            capacidad:
+              type: integer
+            precio_reserva:
+              type: number
+            ocupado:
+              type: boolean
+            createAt:
+              type: string
+              format: date-time
+        message:
+          type: string
+
+    # ? Schema de Estado Detalle Orden
+    ComandaRequest:
+      type: object
+      properties:
+        cliente:
+          type: string
+        id_mesa:
+          type: integer
+    ComandaDetalleRequest:
+      type: object
+      properties:
+        cantidad:
+          type: integer
+        id_opcion:
+          type: integer
+
+    ComandaResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        payload:
+          type: object
+          properties:
+            id:
+              type: integer
+            cliente:
+              type: string
+            finalizado:
+              type: boolean
+            createAt:
+              type: string
+              format: date-time
+        message:
+          type: string
+
+    ComandaDetalleResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+        payload:
+          type: object
+          properties:
+            id:
+              type: integer
+            cantidad:
+              type: integer
+            precio:
+              type: integer
+            precio_total:
+              type: integer
+            id_opcion:
+              type: integer
+            createAt:
+              type: string
+              format: date-time
+        message:
+          type: string

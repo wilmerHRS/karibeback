@@ -1,0 +1,203 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// MODEL ENUM-------------------------------------------------------
+
+enum Sexo {
+  M
+  F
+}
+
+// MODEL TABLE------------------------------------------------------
+
+//TABLE BLUE-----------------
+
+model Rol {
+  id        Int        @id @default(autoincrement())
+  titulo    String     @unique @db.VarChar(50)
+  deleted   Boolean    @default(false)
+  createAt  DateTime   @default(now()) @db.Timestamp(3)
+  updateAt  DateTime   @default(now()) @updatedAt @db.Timestamp(3)
+  empleados Empleado[]
+}
+
+model Local {
+  id           Int            @id @default(autoincrement())
+  telefono     String         @db.Char(9)
+  descripcion  String?        @db.VarChar(255)
+  ruc          String         @db.Char(11)
+  departamento String         @db.VarChar(70)
+  provincia    String         @db.VarChar(70)
+  distrito     String         @db.VarChar(70)
+  deleted      Boolean        @default(false)
+  createAt     DateTime       @default(now()) @db.Timestamp(3)
+  updateAt     DateTime       @default(now()) @updatedAt @db.Timestamp(3)
+  empleados    Empleado[]
+  Opcion_local Opcion_local[]
+  Mesa         Mesa[]
+  Orden        Orden[]
+}
+
+model Empleado {
+  id               Int       @id @default(autoincrement())
+  nombre           String    @db.VarChar(60)
+  ape_paterno      String    @db.VarChar(40)
+  ape_materno      String?   @db.VarChar(40)
+  documento        String    @db.VarChar(11)
+  genero           Sexo      @default(M)
+  fecha_nacimiento DateTime  @db.Date
+  telefono         String?   @db.Char(9)
+  correo           String?   @db.VarChar(60)
+  uid_firebase     String?   @db.VarChar(100)
+  deleted          Boolean   @default(false)
+  createAt         DateTime  @default(now()) @db.Timestamp(3)
+  updateAt         DateTime  @default(now()) @updatedAt @db.Timestamp(3)
+  rol              Rol       @relation(fields: [rol_id], references: [id])
+  rol_id           Int
+  local            Local     @relation(fields: [local_id], references: [id])
+  local_id         Int
+  cuenta           Cuenta?
+  Comanda          Comanda[]
+}
+
+model Cuenta {
+  id          Int      @id @default(autoincrement())
+  usuario     String   @db.VarChar(30)
+  password    String   @db.VarChar(255)
+  suspendido  Boolean  @default(false)
+  deleted     Boolean  @default(false)
+  createAt    DateTime @default(now()) @db.Timestamp(3)
+  updateAt    DateTime @default(now()) @updatedAt @db.Timestamp(3)
+  empleado    Empleado @relation(fields: [empleado_id], references: [id])
+  empleado_id Int      @unique
+}
+
+//TODO: Furakam no code (Productos)
+
+model Producto {
+  id          Int               @id @default(autoincrement())
+  titulo      String            @db.VarChar(60)
+  descripcion String            @db.VarChar(300)
+  url         String            @db.VarChar(255)
+  de_cocina   Boolean           @default(false)
+  deleted     Boolean           @default(false)
+  createAt    DateTime          @default(now()) @db.Timestamp(3)
+  updateAt    DateTime          @default(now()) @updatedAt @db.Timestamp(3)
+  opcion      Opcion_producto[]
+}
+
+model Opcion_producto {
+  id              Int           @id @default(autoincrement())
+  titulo          String        @db.VarChar(60)
+  descripcion     String        @db.VarChar(300)
+  url             String        @db.VarChar(255)
+  precio_estandar Decimal       @db.Decimal(8, 2)
+  deleted         Boolean       @default(false)
+  createAt        DateTime      @default(now()) @db.Timestamp(3)
+  updateAt        DateTime      @default(now()) @updatedAt @db.Timestamp(3)
+  producto        Producto      @relation(fields: [id_producto], references: [id])
+  id_producto     Int
+  op_local        Opcion_local?
+}
+
+model Opcion_local {
+  id            Int             @id @default(autoincrement())
+  precio        Decimal         @db.Decimal(8, 2)
+  activo        Boolean         @default(true)
+  deleted       Boolean         @default(false)
+  createAt      DateTime        @default(now()) @db.Timestamp(3)
+  updateAt      DateTime        @default(now()) @updatedAt @db.Timestamp(3)
+  opcion        Opcion_producto @relation(fields: [id_opcion], references: [id])
+  id_opcion     Int             @unique
+  local         Local           @relation(fields: [id_local], references: [id])
+  id_local      Int
+  Detalle_orden Detalle_orden[]
+}
+
+// TODO: TABLE GREEN --------------------------------------
+
+model Tipo_orden {
+  id       Int      @id @default(autoincrement())
+  titulo   String   @db.VarChar(60)
+  deleted  Boolean  @default(false)
+  createAt DateTime @default(now()) @db.Timestamp(3)
+  updateAt DateTime @default(now()) @updatedAt @db.Timestamp(3)
+  Orden    Orden[]
+}
+
+model Orden {
+  id            Int             @id @default(autoincrement())
+  precio_total  Decimal         @db.Decimal(8, 2)
+  deleted       Boolean         @default(false)
+  createAt      DateTime        @default(now()) @db.Timestamp(3)
+  updateAt      DateTime        @default(now()) @updatedAt @db.Timestamp(3)
+  tipo_orden    Tipo_orden      @relation(fields: [id_tipo_orden], references: [id])
+  id_tipo_orden Int
+  local         Local           @relation(fields: [id_local], references: [id])
+  id_local      Int
+  Detalle_orden Detalle_orden[]
+  Comanda       Comanda?
+}
+
+model Estado_detalle_orden {
+  id            Int             @id @default(autoincrement())
+  titulo        String          @db.VarChar(60)
+  deleted       Boolean         @default(false)
+  createAt      DateTime        @default(now()) @db.Timestamp(3)
+  updateAt      DateTime        @default(now()) @updatedAt @db.Timestamp(3)
+  Detalle_orden Detalle_orden[]
+}
+
+model Detalle_orden {
+  id                 Int                  @id @default(autoincrement())
+  cantidad           Int
+  precio             Decimal              @db.Decimal(8, 2)
+  precio_total       Decimal              @db.Decimal(8, 2)
+  deleted            Boolean              @default(false)
+  createAt           DateTime             @default(now()) @db.Timestamp(3)
+  updateAt           DateTime             @default(now()) @updatedAt @db.Timestamp(3)
+  orden              Orden                @relation(fields: [id_orden], references: [id])
+  id_orden           Int
+  opproducto_local   Opcion_local         @relation(fields: [id_oppro_local], references: [id])
+  id_oppro_local     Int
+  estado_detorden    Estado_detalle_orden @relation(fields: [id_estado_detorden], references: [id])
+  id_estado_detorden Int
+}
+
+model Mesa {
+  id             Int       @id @default(autoincrement())
+  nro_mesa       String    @db.VarChar(60)
+  capacidad      Int
+  precio_reserva Decimal   @db.Decimal(8, 2)
+  ocupado        Boolean   @default(false)
+  deleted        Boolean   @default(false)
+  createAt       DateTime  @default(now()) @db.Timestamp(3)
+  updateAt       DateTime  @default(now()) @updatedAt @db.Timestamp(3)
+  local          Local     @relation(fields: [id_local], references: [id])
+  id_local       Int
+  Comanda        Comanda[]
+}
+
+model Comanda {
+  id          Int      @id @default(autoincrement())
+  cliente     String   @db.VarChar(60)
+  finalizado  Boolean  @default(false)
+  deleted     Boolean  @default(false)
+  createAt    DateTime @default(now()) @db.Timestamp(3)
+  updateAt    DateTime @default(now()) @updatedAt @db.Timestamp(3)
+  orden       Orden    @relation(fields: [id_orden], references: [id])
+  id_orden    Int      @unique
+  empleado    Empleado @relation(fields: [id_empleado], references: [id])
+  id_empleado Int
+  mesa        Mesa     @relation(fields: [id_mesa], references: [id])
+  id_mesa     Int
+}
