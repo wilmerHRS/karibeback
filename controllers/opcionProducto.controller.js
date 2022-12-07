@@ -43,7 +43,13 @@ const getOpProductoById = async (req = request, res = response, next) => {
 const getAllByProductoId = async (req = request, res = response, next) => {
   const { id } = matchedData(req);
   try {
-    const data = await opProductoService.getAllByProductoId(Number(id));
+    let data = await opProductoService.getAllByProductoId(Number(id));
+    if (data.length > 0) {
+      data = data.map((op) => {
+        //? Convertimos el precio_estandar a tipo float ya que prisma nos lo devuelve como objeto
+        return { ...op, precio_estandar: parseFloat(op.precio_estandar) };
+      });
+    }
     return res.status(200).json({
       success: true,
       payload: data,
