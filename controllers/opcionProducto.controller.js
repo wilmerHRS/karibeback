@@ -39,6 +39,21 @@ const getOpProductoById = async (req = request, res = response, next) => {
   }
 };
 
+//* (GET) Obtener Opción de Producto por ID de Producto
+const getAllByProductoId = async (req = request, res = response, next) => {
+  const { id } = matchedData(req);
+  try {
+    const data = await opProductoService.getAllByProductoId(Number(id));
+    return res.status(200).json({
+      success: true,
+      payload: data,
+      message: "Operación Exitosa",
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 //* (POST) Crear Opción de Producto
 const createOpProducto = async (req = request, res = response, next) => {
   const { id, ...body } = matchedData(req);
@@ -90,6 +105,7 @@ const deleteOpProducto = async (req = request, res = response, next) => {
 export {
   getAllOpProductos,
   getOpProductoById,
+  getAllByProductoId,
   createOpProducto,
   updateOpProducto,
   deleteOpProducto,

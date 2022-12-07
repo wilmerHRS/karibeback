@@ -20,6 +20,28 @@ const getAllOpcionProducto = async () => {
   return opProductos;
 };
 
+//* Obtener una Opcion de Producto por ID de Producto
+const getAllByProductoId = async (id = 0) => {
+  if (id <= 0) throw new BadRequestError(`El id "${id}" es inválido`);
+
+  const opProducto = await prisma.opcion_producto.findMany({
+    where: { id_producto: Number(id) },
+    select: {
+      id: true,
+      titulo: true,
+      descripcion: true,
+      url: true,
+      precio_estandar: true,
+      id_producto: true,
+    },
+  });
+
+  if (opProducto === null)
+    throw new BadRequestError("No se encontró la opción de producto", 404);
+
+  return opProducto;
+};
+
 //* Obtener una Opcion de Producto por ID
 const getOpcionProductoById = async (id = 0) => {
   if (id <= 0) throw new BadRequestError(`El id "${id}" es inválido`);
@@ -119,6 +141,7 @@ const deleteOpcionProducto = async (id = 0) => {
 
 export default {
   getAllOpcionProducto,
+  getAllByProductoId,
   getOpcionProductoById,
   createOpcionProducto,
   updateOpcionProducto,
