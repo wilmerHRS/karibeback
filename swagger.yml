@@ -2472,14 +2472,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/ComandaDetalleRequest"
+              $ref: "#/components/schemas/MesaRequest"
       responses:
         201:
           description: Created
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ComandaResponse"
+                $ref: "#/components/schemas/MesaResponse"
         400:
           description: Bad Request
           content:
