@@ -1,30 +1,21 @@
 import { Router } from "express";
-
-import { getAll, getById, _delete } from "../controllers/local.controller.js";
-import { idValidator } from "../validators/global.validators.js";
 import {
-  ordenDataValidator,
-  ordenIdValidator,
-  ordenIdValidatorTwo,
-} from "../validators/orden.validators.js";
-import { tipoOrdenIdValidator } from "../validators/tipoOrden.validators.js";
+  getAllCompletedOrden,
+  getAllOrdenInProcess,
+  getAllOrdenReceived,
+} from "../controllers/detalleOrden.controller.js";
 
 const router = Router();
 
-router.get("/", getAll);
-router.get("/:id", idValidator, getById);
+//! agregar rutas al swagger
 
-router.get("/tipos/:id", tipoOrdenIdValidator, getById);
+//* obtener por local
+router.get("/recibidas", getAllOrdenReceived);
+router.get("/en-proceso", getAllOrdenInProcess);
+router.get("/concluidas", getAllCompletedOrden);
 
-router.get("/locales/:id", tipoOrdenIdValidator, getAll);
-
-// * DETALLE
-router.get("/:id/detalles", ordenIdValidator, getAll);
-router.get(
-  "/:id_orden/detalles/:id",
-  ordenIdValidatorTwo,
-  ordenDataValidator,
-  getById
-);
+//* cambiar estado
+// router.post("/:id/tomar-orden", mesaIdValidator, getById);
+// router.post("/:id/finalizar-orden", mesaIdValidator, getById);
 
 export default router;
