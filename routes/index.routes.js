@@ -13,6 +13,7 @@ import opTipoOrdenRoute from "./tipoOrden.routes.js";
 import estadoDOrdenRoute from "./estadoDetOrden.routes.js";
 import mesaRoute from "./mesa.routes.js";
 import comandaRoute from "./comanda.routes.js";
+import ordenRoute from "./orden.routes.js";
 
 const router = Router();
 
@@ -29,5 +30,6 @@ router.use("/tipo-orden", opTipoOrdenRoute);
 router.use("/estado-detalle-orden", estadoDOrdenRoute);
 router.use("/mesa", mesaRoute);
 router.use("/comandas", comandaRoute);
+router.use("/ordenes", ordenRoute);
 
 export default router;
