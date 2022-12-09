@@ -54,7 +54,41 @@ const getAllCompletedOrden = async (req = request, res = response, next) => {
   }
 };
 
-//! Cambiar estado de las ordenes
+//! Cambiar estado "en proceso"
+const tomarOrden = async (req = request, res = response, next) => {
+  const { id } = matchedData(req);
+  //! Cambiar estado "en proceso"
+  const body = { id_estado_detorden: 2 };
+
+  try {
+    const data = await detalleOrdenService.update(Number(id), body);
+    res.status(200).json({
+      success: true,
+      payload: data,
+      message: "Detalle Orden Actualizado con Éxito",
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+//! Cambiar estado terminado
+const finalizarOrden = async (req = request, res = response, next) => {
+  const { id } = matchedData(req);
+  //! Cambiar estado terminado
+  const body = { id_estado_detorden: 3 };
+
+  try {
+    const data = await detalleOrdenService.update(Number(id), body);
+    res.status(200).json({
+      success: true,
+      payload: data,
+      message: "Detalle Orden Actualizado con Éxito",
+    });
+  } catch (err) {
+    next(err);
+  }
+};
 
 const create = async (req = request, res = response, next) => {
   let body = matchedData(req);
@@ -76,5 +110,7 @@ export {
   getAllOrdenReceived,
   getAllOrdenInProcess,
   getAllCompletedOrden,
+  tomarOrden,
+  finalizarOrden,
   create,
 };

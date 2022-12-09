@@ -111,28 +111,21 @@ const update = async (id = 0, body = null) => {
   if ((typeof body === "object" && Object.keys(body).length === 0) || !body)
     throw new BadRequestError("No se ha enviado los datos correspondientes");
 
-  const updateLocal = prisma.local.update({
+  const updateOrden = prisma.orden.update({
     where: { id: Number(id) },
     data: { ...body },
   });
 
-  const local = prisma.local.findUnique({
+  const orden = prisma.orden.findUnique({
     where: { id: Number(id) },
     select: {
       id: true,
-      telefono: true,
-      descripcion: true,
-      ruc: true,
-      departamento: true,
-      provincia: true,
-      distrito: true,
-      createAt: true,
     },
   });
 
-  await prisma.$transaction([updateLocal, local]);
+  await prisma.$transaction([updateOrden, orden]);
 
-  return local;
+  return orden;
 };
 
 const _delete = async (id = 0) => {

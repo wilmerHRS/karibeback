@@ -1,6 +1,7 @@
 // TODO: Servicio OPCION de PRODUCTO
 import prisma from "../config/prisma.js";
 import { BadRequestError } from "../helpers/handleError.js";
+import opcionLocalService from "./opcionLocal.service.js";
 
 //* Obtener lista de opciones de productos
 const getAllOpcionProducto = async () => {
@@ -20,7 +21,7 @@ const getAllOpcionProducto = async () => {
   return opProductos;
 };
 
-//* Obtener una Opcion de Producto por ID de Producto
+//* Obtener todas las Opcion de Producto por ID de Producto
 const getAllByProductoId = async (id = 0) => {
   if (id <= 0) throw new BadRequestError(`El id "${id}" es inválido`);
 
@@ -33,6 +34,42 @@ const getAllByProductoId = async (id = 0) => {
       url: true,
       precio_estandar: true,
       id_producto: true,
+    },
+  });
+
+  if (opProducto === null)
+    throw new BadRequestError("No se encontró la opción de producto", 404);
+
+  return opProducto;
+};
+
+//* Obtener todas las Opcion de Producto por ID de Producto
+const getByLocalAndProductoId = async (id_local = 0, id = 0) => {
+  if (id <= 0) throw new BadRequestError(`El id "${id}" es inválido`);
+  if (id_local <= 0)
+    throw new BadRequestError(`El id "${id}" de Local es inválido`);
+
+  const opProducto = await prisma.opcion_producto.findMany({
+    where: {
+      id_producto: id,
+      op_local: {
+        id_local: id_local,
+        deleted: false,
+      },
+    },
+    select: {
+      id: true,
+      titulo: true,
+      descripcion: true,
+      url: true,
+      precio_estandar: true,
+      id_producto: true,
+      op_local: {
+        select: {
+          precio: true,
+          activo: true,
+        },
+      },
     },
   });
 
@@ -65,7 +102,11 @@ const getOpcionProductoById = async (id = 0) => {
 };
 
 //* Crear una opción de producto
-const createOpcionProducto = async (id_producto = 0, body = null) => {
+const createOpcionProducto = async (
+  id_producto = 0,
+  body = null,
+  id_local = null
+) => {
   if (id_producto <= 0) throw new BadRequestError(`El id "${id}" es inválido`);
 
   if ((typeof body === "object" && Object.keys(body).length === 0) || !body)
@@ -82,6 +123,15 @@ const createOpcionProducto = async (id_producto = 0, body = null) => {
       id_producto: true,
     },
   });
+
+  if (id_local) {
+    const info = { precio: opProducto.precio_estandar, activo: true };
+    await opcionLocalService.createOpcionLocal(
+      Number(id_local),
+      Number(opProducto.id),
+      info
+    );
+  }
 
   return opProducto;
 };
@@ -142,6 +192,7 @@ const deleteOpcionProducto = async (id = 0) => {
 export default {
   getAllOpcionProducto,
   getAllByProductoId,
+  getByLocalAndProductoId,
   getOpcionProductoById,
   createOpcionProducto,
   updateOpcionProducto,

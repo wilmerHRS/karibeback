@@ -282,34 +282,45 @@ const createDetalle = async (id_comanda = 0, body = null) => {
   });
 };
 
+//* Actualizar comanda
 const update = async (id = 0, body = null) => {
   if (id <= 0) throw new BadRequestError(`El id "${id}" es inválido`);
 
   if ((typeof body === "object" && Object.keys(body).length === 0) || !body)
     throw new BadRequestError("No se ha enviado los datos correspondientes");
 
-  const updateLocal = prisma.local.update({
+  const updateComanda = prisma.comanda.update({
     where: { id: Number(id) },
     data: { ...body },
   });
 
-  const local = prisma.local.findUnique({
+  const comanda = prisma.comanda.findUnique({
     where: { id: Number(id) },
     select: {
       id: true,
-      telefono: true,
-      descripcion: true,
-      ruc: true,
-      departamento: true,
-      provincia: true,
-      distrito: true,
+      cliente: true,
+      finalizado: true,
+      orden: {
+        select: {
+          id: true,
+          precio_total: true,
+        },
+      },
+      mesa: {
+        select: {
+          id: true,
+          nro_mesa: true,
+        },
+      },
       createAt: true,
     },
   });
 
-  await prisma.$transaction([updateLocal, local]);
+  await prisma.$transaction([updateComanda, comanda]);
 
-  return local;
+  if (!comanda) throw new BadRequestError("Comanda no Encontrada", 404);
+
+  return comanda;
 };
 
 const _delete = async (id = 0) => {

@@ -9,6 +9,7 @@ import tipoOrdenService from "../services/tipoOrden.service.js";
 import estadoDOrdenService from "../services/estadoDetOrden.service.js";
 import mesaService from "../services/mesa.service.js";
 import comandaService from "../services/comanda.service.js";
+import detOrdenService from "../services/detalleOrden.service.js";
 
 // ROL---------------------------------------------
 
@@ -130,13 +131,25 @@ const mesaExistsById = async (id = 0) => {
   }
 };
 
-// MESA-------------------------------------------
+// COMANDA-------------------------------------------
 
 const comandaExistsById = async (id = 0) => {
   if (id === "" || id <= 0) return;
 
   try {
     await comandaService.getById(Number(id));
+  } catch (err) {
+    throw new Error(err.message);
+  }
+};
+
+// DETALLE ORDEN-------------------------------------------
+
+const detOrdenExistsById = async (id = 0) => {
+  if (id === "" || id <= 0) return;
+
+  try {
+    await detOrdenService.getById(Number(id));
   } catch (err) {
     throw new Error(err.message);
   }
@@ -154,4 +167,5 @@ export {
   estadoDOrdenExistsById,
   mesaExistsById,
   comandaExistsById,
+  detOrdenExistsById,
 };

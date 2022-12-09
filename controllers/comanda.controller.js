@@ -18,12 +18,37 @@ const getAll = async (req = request, res = response, next) => {
   }
 };
 
-const getAllByMeseroId = async (req = request, res = response, next) => {
+// * (GET) Obtener comandas no finalizadas
+const getNotFinalizedByMeseroId = async (
+  req = request,
+  res = response,
+  next
+) => {
   // obtener id de token
   const id_empleado = 1;
 
   // tipo
   const type = "NO FINALIZADAS";
+
+  try {
+    const data = await comandaService.getAllByEmpleadoId(id_empleado, type);
+    res.status(200).json({
+      success: true,
+      payload: data,
+      message: "Operación Exitosa",
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// * (GET) Obtener comandas finalizadas
+const getFinalizedByMeseroId = async (req = request, res = response, next) => {
+  // obtener id de token
+  const id_empleado = 1;
+
+  // tipo
+  const type = "FINALIZADAS";
 
   try {
     const data = await comandaService.getAllByEmpleadoId(id_empleado, type);
@@ -150,6 +175,23 @@ const createDetalle = async (req = request, res = response, next) => {
   }
 };
 
+// ! (POST) Crear comanda
+const finalizar = async (req = request, res = response, next) => {
+  const { id } = matchedData(req);
+  const body = { finalizado: true };
+
+  try {
+    const data = await comandaService.update(Number(id), body);
+    res.status(201).json({
+      success: true,
+      payload: data,
+      message: "Comanda Finalizada con Éxito",
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 const update = async (req = request, res = response, next) => {
   const { id } = matchedData(req);
   const { body } = req;
@@ -183,10 +225,12 @@ const _delete = async (req = request, res = response, next) => {
 export {
   getAll,
   getById,
-  getAllByMeseroId,
+  getNotFinalizedByMeseroId,
+  getFinalizedByMeseroId,
   getByMeseroId,
   create,
   createDetalle,
+  finalizar,
   update,
   _delete,
 };

@@ -1533,6 +1533,59 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /opciones-productos/productos/{id}/local:
+    get:
+      tags:
+        - Opciones de Producto
+      operationId: getByLocalAndProductoId
+      summary: Retorna información de un Producto.
+      description: Retorna una lista de todas las opciones de productos
+      parameters:
+        - name: id
+          in: path
+          description: ID de Producto
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseAll"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
   /opciones-productos/{id}:
     get:
       tags:
@@ -2756,9 +2809,48 @@ paths:
     get:
       tags:
         - Comanda
-      operationId: comandaNoFinalizadasGetAll
+      operationId: getNotFinalizedByMeseroId
       summary: Retorna información de las Comanda.
       description: Retorna toda la informacion de las Comanda, permite recibir query params para paginación
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseAll"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /comandas/finalizadas/mesero:
+    get:
+      tags:
+        - Comanda
+      operationId: getFinalizedByMeseroId
+      summary: Retorna información de las Comanda Finalizadas.
+      description: Retorna toda la informacion de las Comanda Finalizadas, permite recibir query params para paginación
       responses:
         200:
           description: Success
@@ -3119,8 +3211,61 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
-  # /comandas/{id}/detalles/{id_detalle}:
+  /comandas/{id}/finalizar:
+    post:
+      tags:
+        - Comanda
+      operationId: comandaFinalizar
+      summary: Finalizar una Comanda.
+      description: Finalizar Comanda.
+      parameters:
+        - name: id
+          in: path
+          description: ID de Comanda
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ComandaResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
 
+  # /comandas/{id}/detalles/{id_detalle}:
+  # * ORDENES
   /ordenes/recibidas:
     get:
       tags:
@@ -3225,6 +3370,112 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseAll"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /ordenes/{id}/tomar-orden:
+    post:
+      tags:
+        - Orden
+      operationId: tomarOrden
+      summary: Retorna información de la Orden que se ha tomado.
+      description: Retorna toda la informacion solo de una Orden
+      parameters:
+        - name: id
+          in: path
+          description: ID de Orden
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /ordenes/{id}/finalizar-orden:
+    post:
+      tags:
+        - Orden
+      operationId: finalizarOrden
+      summary: Retorna información de la Orden que se ha tomado.
+      description: Retorna toda la informacion solo de una Orden
+      parameters:
+        - name: id
+          in: path
+          description: ID de Orden
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Response"
         400:
           description: Bad Request
           content:
