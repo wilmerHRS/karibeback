@@ -7,8 +7,10 @@ import {
   update,
   _delete,
   createDetalle,
-  getAllByMeseroId,
   getByMeseroId,
+  getNotFinalizedByMeseroId,
+  getFinalizedByMeseroId,
+  finalizar,
 } from "../controllers/comanda.controller.js";
 import {
   comandaIdValidator,
@@ -31,7 +33,8 @@ router.get("/:id", idValidator, getById); // hecho
 router.get("/local", getAll);
 router.get("/locales/:id", localIdValidator, getById);
 router.get("/meseros/:id", empleadoIdValidator, getById);
-router.get("/no-finalizadas/mesero", getAllByMeseroId); // hecho
+router.get("/no-finalizadas/mesero", getNotFinalizedByMeseroId); // hecho
+router.get("/finalizadas/mesero", getFinalizedByMeseroId); // hecho
 router.get("/:id/no-finalizadas/mesero", comandaIdValidator, getByMeseroId); // hecho
 router.get("/:id/detalles", comandaIdValidator, getById);
 
@@ -45,7 +48,7 @@ router.post(
 ); // hecho
 
 // * (POST) Finalizar Comanda
-router.post("/:id/finalizar", create);
+router.post("/:id/finalizar", comandaIdValidator, finalizar); //! hacer
 
 // * (PUT) Actualizar
 router.put("/:id", comandaIdValidator, update);

@@ -60,11 +60,45 @@ const getAllByProductoId = async (req = request, res = response, next) => {
   }
 };
 
+//* (GET) Obtener Opción de Producto por ID de Producto
+const getByLocalAndProductoId = async (req = request, res = response, next) => {
+  const { id } = matchedData(req);
+  //! Obtener id de Local del usuario
+  const id_local = 1;
+
+  try {
+    let data = await opProductoService.getByLocalAndProductoId(
+      Number(id_local),
+      Number(id)
+    );
+    if (data.length > 0) {
+      data = data.map((op) => {
+        //? Convertimos el precio_estandar a tipo float ya que prisma nos lo devuelve como objeto
+        return { ...op, precio_estandar: parseFloat(op.precio_estandar) };
+      });
+    }
+    return res.status(200).json({
+      success: true,
+      payload: data,
+      message: "Operación Exitosa",
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 //* (POST) Crear Opción de Producto
 const createOpProducto = async (req = request, res = response, next) => {
   const { id, ...body } = matchedData(req);
+  //! Obtener id de Local del usuario
+  const id_local = 1;
+
   try {
-    const data = await opProductoService.createOpcionProducto(Number(id), body);
+    const data = await opProductoService.createOpcionProducto(
+      Number(id),
+      body,
+      id_local
+    );
 
     return res.status(201).json({
       success: true,
@@ -112,6 +146,7 @@ export {
   getAllOpProductos,
   getOpProductoById,
   getAllByProductoId,
+  getByLocalAndProductoId,
   createOpProducto,
   updateOpProducto,
   deleteOpProducto,

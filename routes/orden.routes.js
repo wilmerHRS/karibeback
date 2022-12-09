@@ -1,9 +1,12 @@
 import { Router } from "express";
 import {
+  finalizarOrden,
   getAllCompletedOrden,
   getAllOrdenInProcess,
   getAllOrdenReceived,
+  tomarOrden,
 } from "../controllers/detalleOrden.controller.js";
+import { detalleOIdValidator } from "../validators/detalleOrden.validators.js";
 
 const router = Router();
 
@@ -13,6 +16,8 @@ const router = Router();
 router.get("/recibidas", getAllOrdenReceived);
 router.get("/en-proceso", getAllOrdenInProcess);
 router.get("/concluidas", getAllCompletedOrden);
+router.post("/:id/tomar-orden", detalleOIdValidator, tomarOrden);
+router.post("/:id/finalizar-orden", detalleOIdValidator, finalizarOrden);
 
 //* cambiar estado
 // router.post("/:id/tomar-orden", mesaIdValidator, getById);
