@@ -40,8 +40,8 @@ router.get("/no-finalizadas/mesero", getNotFinalizedByMeseroId); // hecho
 router.get("/finalizadas/mesero", getFinalizedByMeseroId); // hecho
 router.get("/:id/no-finalizadas/mesero", comandaIdValidator, getByMeseroId); // hecho
 router.get("/:id/detalles", comandaIdValidator, getById);
-router.get("/no-pagadas/mesero", getUnPaidByMeseroId); //! por hacer controlador, swagger
-router.get("/pagadas/mesero", getPaidByMeseroId); //! por hacer controlador, swagger
+router.get("/no-pagadas/mesero", getUnPaidByMeseroId); // hecho
+router.get("/pagadas/mesero", getPaidByMeseroId); // hecho
 
 // * (POST) Crear
 router.post("/", comandaDataValidator, create); // hecho
