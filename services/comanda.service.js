@@ -264,9 +264,8 @@ const createDetalle = async (id_comanda = 0, body = null) => {
   });
 
   const bodyData = { ...body, id_orden };
-  // console.log(bodyData);
 
-  return await prisma.detalle_orden.create({
+  const data = await prisma.detalle_orden.create({
     data: bodyData,
     select: {
       id: true,
@@ -318,6 +317,26 @@ const createDetalle = async (id_comanda = 0, body = null) => {
       },
     },
   });
+
+  //! sumar todo los precio total de los detalles
+  const {
+    _sum: { precio_total },
+  } = await prisma.detalle_orden.aggregate({
+    where: {
+      id_orden: id_orden,
+      deleted: false,
+    },
+    _sum: {
+      precio_total: true,
+    },
+  });
+
+  await prisma.orden.update({
+    where: { id: id_orden },
+    data: { precio_total },
+  });
+
+  return data;
 };
 
 //* Actualizar comanda
