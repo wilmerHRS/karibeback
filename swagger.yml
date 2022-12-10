@@ -3264,6 +3264,137 @@ paths:
               schema:
                 $ref: "#/components/schemas/Error"
 
+  /comandas/no-pagadas/mesero:
+    get:
+      tags:
+        - Comanda
+      operationId: getUnPaidByMeseroId
+      summary: Retorna información de las Comanda no Pagadas.
+      description: Retorna toda la informacion de las Comanda no Pagadas, permite recibir query params para paginación
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseAll"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /comandas/pagadas/mesero:
+    get:
+      tags:
+        - Comanda
+      operationId: getPaidByMeseroId
+      summary: Retorna información de las Comanda Pagadas.
+      description: Retorna toda la informacion de las Comanda Pagadas, permite recibir query params para paginación
+      responses:
+        200:
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseAll"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /comandas/{id}/pagar:
+    post:
+      tags:
+        - Comanda
+      operationId: comandaPagar
+      summary: Pagar una Comanda.
+      description: Pagar Comanda.
+      parameters:
+        - name: id
+          in: path
+          description: ID de Comanda
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        201:
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ComandaResponse"
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        401:
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        403:
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
   # /comandas/{id}/detalles/{id_detalle}:
   # * ORDENES
   /ordenes/recibidas:

@@ -191,6 +191,7 @@ model Comanda {
   id          Int      @id @default(autoincrement())
   cliente     String   @db.VarChar(60)
   finalizado  Boolean  @default(false)
+  pagado      Boolean  @default(false)
   deleted     Boolean  @default(false)
   createAt    DateTime @default(now()) @db.Timestamp(3)
   updateAt    DateTime @default(now()) @updatedAt @db.Timestamp(3)
