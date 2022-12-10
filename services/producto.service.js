@@ -40,6 +40,9 @@ const getProductoById = async (id) => {
       url: true,
       de_cocina: true,
       opcion: {
+        where: {
+          deleted: false,
+        },
         select: {
           id: true,
           titulo: true,
