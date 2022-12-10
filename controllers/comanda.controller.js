@@ -62,6 +62,48 @@ const getFinalizedByMeseroId = async (req = request, res = response, next) => {
   }
 };
 
+// * (GET) Obtener comandas no pagadas
+const getUnPaidByMeseroId = async (req = request, res = response, next) => {
+  // obtener id de token
+  const id_empleado = 1;
+  const pagado = false;
+
+  try {
+    const data = await comandaService.getAllPagoByEmpleadoId(
+      Number(id_empleado),
+      pagado
+    );
+    res.status(200).json({
+      success: true,
+      payload: data,
+      message: "Operación Exitosa",
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// * (GET) Obtener comandas pagadas
+const getPaidByMeseroId = async (req = request, res = response, next) => {
+  // obtener id de token
+  const id_empleado = 1;
+  const pagado = true;
+
+  try {
+    const data = await comandaService.getAllPagoByEmpleadoId(
+      Number(id_empleado),
+      pagado
+    );
+    res.status(200).json({
+      success: true,
+      payload: data,
+      message: "Operación Exitosa",
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 const getByMeseroId = async (req = request, res = response, next) => {
   const { id } = matchedData(req);
 
@@ -87,7 +129,7 @@ const getByMeseroId = async (req = request, res = response, next) => {
   }
 };
 
-// Obtener comanda por ID
+// * Obtener comanda por ID
 const getById = async (req = request, res = response, next) => {
   const { id } = matchedData(req);
 
@@ -175,7 +217,7 @@ const createDetalle = async (req = request, res = response, next) => {
   }
 };
 
-// ! (POST) Crear comanda
+// * (POST) Finalizar comanda
 const finalizar = async (req = request, res = response, next) => {
   const { id } = matchedData(req);
   const body = { finalizado: true };
@@ -186,6 +228,24 @@ const finalizar = async (req = request, res = response, next) => {
       success: true,
       payload: data,
       message: "Comanda Finalizada con Éxito",
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// * (POST) Pagar comanda
+const pagar = async (req = request, res = response, next) => {
+  const { id } = matchedData(req);
+  const body = { pagado: true };
+  const finalizado = true;
+
+  try {
+    const data = await comandaService.update(Number(id), body, finalizado);
+    res.status(201).json({
+      success: true,
+      payload: data,
+      message: "Comanda Pagada con Éxito",
     });
   } catch (err) {
     next(err);
@@ -227,10 +287,13 @@ export {
   getById,
   getNotFinalizedByMeseroId,
   getFinalizedByMeseroId,
+  getUnPaidByMeseroId,
+  getPaidByMeseroId,
   getByMeseroId,
   create,
   createDetalle,
   finalizar,
+  pagar,
   update,
   _delete,
 };

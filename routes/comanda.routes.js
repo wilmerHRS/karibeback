@@ -11,6 +11,9 @@ import {
   getNotFinalizedByMeseroId,
   getFinalizedByMeseroId,
   finalizar,
+  pagar,
+  getUnPaidByMeseroId,
+  getPaidByMeseroId,
 } from "../controllers/comanda.controller.js";
 import {
   comandaIdValidator,
@@ -37,6 +40,8 @@ router.get("/no-finalizadas/mesero", getNotFinalizedByMeseroId); // hecho
 router.get("/finalizadas/mesero", getFinalizedByMeseroId); // hecho
 router.get("/:id/no-finalizadas/mesero", comandaIdValidator, getByMeseroId); // hecho
 router.get("/:id/detalles", comandaIdValidator, getById);
+router.get("/no-pagadas/mesero", getUnPaidByMeseroId); //! por hacer controlador, swagger
+router.get("/pagadas/mesero", getPaidByMeseroId); //! por hacer controlador, swagger
 
 // * (POST) Crear
 router.post("/", comandaDataValidator, create); // hecho
@@ -48,7 +53,9 @@ router.post(
 ); // hecho
 
 // * (POST) Finalizar Comanda
-router.post("/:id/finalizar", comandaIdValidator, finalizar); //! hacer
+router.post("/:id/finalizar", comandaIdValidator, finalizar); // hecho
+// * (POST) Finalizar Comanda
+router.post("/:id/pagar", comandaIdValidator, pagar); // hecho
 
 // * (PUT) Actualizar
 router.put("/:id", comandaIdValidator, update);

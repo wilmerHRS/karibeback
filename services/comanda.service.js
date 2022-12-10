@@ -93,6 +93,44 @@ const getAllByEmpleadoId = async (id_empleado = 0, type = "TODAS") => {
   return comanda;
 };
 
+//* Obtener Comandas por ID de Empleado (no pagadas/ pagadas)
+const getAllPagoByEmpleadoId = async (id_empleado = 0, pagado = null) => {
+  if (id_empleado <= 0) throw new BadRequestError(`El id "${id}" es inválido`);
+
+  const query = { id_empleado };
+
+  // obtener cuando este pagado o no, en todo caso no venga el "pagado" obtendrá todos
+  if ([true, false].includes(pagado)) query.pagado = pagado;
+
+  console.log(query);
+
+  const comanda = await prisma.comanda.findMany({
+    where: { ...query },
+    select: {
+      id: true,
+      cliente: true,
+      finalizado: true,
+      orden: {
+        select: {
+          id: true,
+          precio_total: true,
+        },
+      },
+      mesa: {
+        select: {
+          id: true,
+          nro_mesa: true,
+        },
+      },
+      createAt: true,
+    },
+  });
+
+  if (!comanda) throw new BadRequestError("Comanda no Encontrada", 404);
+
+  return comanda;
+};
+
 //* Obtener Comanda y detalle por ID de Empleado (no finalizadas/ finalizadas)
 const getByEmpleadoId = async (id_empleado = 0, id = 0, type = "TODAS") => {
   if (id_empleado <= 0)
@@ -283,19 +321,24 @@ const createDetalle = async (id_comanda = 0, body = null) => {
 };
 
 //* Actualizar comanda
-const update = async (id = 0, body = null) => {
+const update = async (id = 0, body = null, finalizado = null) => {
   if (id <= 0) throw new BadRequestError(`El id "${id}" es inválido`);
 
   if ((typeof body === "object" && Object.keys(body).length === 0) || !body)
     throw new BadRequestError("No se ha enviado los datos correspondientes");
 
+  const query = { id: Number(id) };
+
+  // actualizar cuando este finalizado o no, en todo caso no venga el "finalizado" actualizara siempre
+  if ([true, false].includes(finalizado)) query.finalizado = finalizado;
+
   const updateComanda = prisma.comanda.update({
-    where: { id: Number(id) },
+    where: { ...query },
     data: { ...body },
   });
 
   const comanda = prisma.comanda.findUnique({
-    where: { id: Number(id) },
+    where: { ...query },
     select: {
       id: true,
       cliente: true,
@@ -318,7 +361,7 @@ const update = async (id = 0, body = null) => {
 
   await prisma.$transaction([updateComanda, comanda]);
 
-  if (!comanda) throw new BadRequestError("Comanda no Encontrada", 404);
+  if (!(await comanda)) throw new BadRequestError("Comanda no Encontrada", 404);
 
   return comanda;
 };
@@ -346,6 +389,7 @@ export default {
   getById,
   getAllByEmpleadoId,
   getByEmpleadoId,
+  getAllPagoByEmpleadoId,
   create,
   createDetalle,
   update,
