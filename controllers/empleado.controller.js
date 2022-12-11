@@ -79,9 +79,10 @@ const _delete = async (req = request, res = response, next) => {
   const { id } = matchedData(req);
 
   try {
-    await empleadoService.delete(id);
+    const data = await empleadoService.delete(id);
     res.status(200).json({
       success: true,
+      payload: data,
       message: "Empleado Eliminado con Éxito",
     });
   } catch (err) {

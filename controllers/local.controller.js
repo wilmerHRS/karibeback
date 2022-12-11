@@ -67,9 +67,10 @@ const _delete = async (req = request, res = response, next) => {
   const { id } = matchedData(req);
 
   try {
-    await rolService.delete(id);
+    const data = await rolService.delete(id);
     res.status(200).json({
       success: true,
+      payload: data,
       message: "Local Eliminado con Éxito",
     });
   } catch (err) {

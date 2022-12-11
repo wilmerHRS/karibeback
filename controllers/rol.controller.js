@@ -70,11 +70,12 @@ const _delete = async (req = request, res = response, next) => {
   const { id } = matchedData(req);
 
   try {
-    await rolService.delete(id);
+    const data = await rolService.delete(id);
     io.emit("socket-rol", { type: "deleted", data: { id: Number(id) } });
 
     res.status(200).json({
       success: true,
+      payload: data,
       message: "Rol Eliminado con Éxito",
     });
   } catch (err) {

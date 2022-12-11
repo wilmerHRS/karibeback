@@ -272,9 +272,10 @@ const _delete = async (req = request, res = response, next) => {
   const { id } = matchedData(req);
 
   try {
-    await comandaService.delete(id);
+    const data = await comandaService.delete(id);
     res.status(200).json({
       success: true,
+      payload: data,
       message: "Local Eliminado con Éxito",
     });
   } catch (err) {
