@@ -38,6 +38,33 @@ const getById = async (id = 0) => {
         select: {
           id: true,
           precio_total: true,
+          Detalle_orden: {
+            select: {
+              id: true,
+              cantidad: true,
+              precio: true,
+              precio_total: true,
+              estado_detorden: {
+                select: {
+                  id: true,
+                  titulo: true,
+                },
+              },
+              opproducto_local: {
+                select: {
+                  id: true,
+                  precio: true,
+                  opcion: {
+                    select: {
+                      id: true,
+                      titulo: true,
+                      url: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
         },
       },
       mesa: {
@@ -114,6 +141,33 @@ const getAllPagoByEmpleadoId = async (id_empleado = 0, pagado = null) => {
         select: {
           id: true,
           precio_total: true,
+          Detalle_orden: {
+            select: {
+              id: true,
+              cantidad: true,
+              precio: true,
+              precio_total: true,
+              estado_detorden: {
+                select: {
+                  id: true,
+                  titulo: true,
+                },
+              },
+              opproducto_local: {
+                select: {
+                  id: true,
+                  precio: true,
+                  opcion: {
+                    select: {
+                      id: true,
+                      titulo: true,
+                      url: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
         },
       },
       mesa: {
