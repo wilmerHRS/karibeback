@@ -96,9 +96,14 @@ const updatePassword = async (req = request, res = response, next) => {
   const { id, password, newpasword } = matchedData(req);
 
   try {
-    await cuentaService.updatePassword(Number(id), password, newpasword);
+    const data = await cuentaService.updatePassword(
+      Number(id),
+      password,
+      newpasword
+    );
     res.status(200).json({
       success: true,
+      payload: data,
       message: "Contraseña Actualizado con Éxito",
     });
   } catch (err) {

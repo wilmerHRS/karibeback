@@ -62,9 +62,10 @@ const update = async (req = request, res = response, next) => {
 const _delete = async (req = request, res = response, next) => {
   const { id } = matchedData(req);
   try {
-    await tipoOrdenService.delete(Number(id));
+    const data = await tipoOrdenService.delete(Number(id));
     res.status(200).json({
       success: true,
+      payload: data,
       message: "Tipo Orden Eliminado con Éxito",
     });
   } catch (err) {
