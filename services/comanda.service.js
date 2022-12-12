@@ -170,6 +170,12 @@ const getAllPagoByEmpleadoId = async (id_empleado = 0, pagado = null) => {
           },
         },
       },
+      empleado: {
+        select: {
+          nombre: true,
+          ape_paterno: true,
+        },
+      },
       mesa: {
         select: {
           id: true,
