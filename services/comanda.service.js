@@ -59,12 +59,25 @@ const getById = async (id = 0) => {
                       id: true,
                       titulo: true,
                       url: true,
+                      producto: {
+                        select: {
+                          id: true,
+                          titulo: true,
+                          descripcion: true,
+                        },
+                      },
                     },
                   },
                 },
               },
             },
           },
+        },
+      },
+      empleado: {
+        select: {
+          nombre: true,
+          ape_paterno: true,
         },
       },
       mesa: {
@@ -162,6 +175,13 @@ const getAllPagoByEmpleadoId = async (id_empleado = 0, pagado = null) => {
                       id: true,
                       titulo: true,
                       url: true,
+                      producto: {
+                        select: {
+                          id: true,
+                          titulo: true,
+                          descripcion: true,
+                        },
+                      },
                     },
                   },
                 },
@@ -237,12 +257,25 @@ const getByEmpleadoId = async (id_empleado = 0, id = 0, type = "TODAS") => {
                       id: true,
                       titulo: true,
                       url: true,
+                      producto: {
+                        select: {
+                          id: true,
+                          titulo: true,
+                          descripcion: true,
+                        },
+                      },
                     },
                   },
                 },
               },
             },
           },
+        },
+      },
+      empleado: {
+        select: {
+          nombre: true,
+          ape_paterno: true,
         },
       },
       mesa: {
