@@ -189,7 +189,7 @@ const update = async (id = 0, body = null) => {
 const _delete = async (id = 0) => {
   if (id <= 0) throw new BadRequestError(`El id "${id}" es inválido`);
 
-  const deleteEmpleado = prisma.empleado.delete({
+  const empleado = await prisma.empleado.delete({
     where: { id: Number(id) },
     select: {
       id: true,
@@ -217,18 +217,16 @@ const _delete = async (id = 0) => {
     },
   });
 
-  const deleteCuenta = prisma.cuenta.delete({
-    where: { empleado_id: Number(id) },
-    select: {
-      id: true,
-      usuario: true,
-      createAt: true,
-    },
-  });
+  // const deleteCuenta = await prisma.cuenta.delete({
+  //   where: { empleado_id: Number(id) },
+  //   select: {
+  //     id: true,
+  //     usuario: true,
+  //     createAt: true,
+  //   },
+  // });
 
-  await prisma.$transaction([deleteEmpleado, deleteCuenta]);
-
-  return deleteEmpleado;
+  return empleado;
 };
 
 export default {
