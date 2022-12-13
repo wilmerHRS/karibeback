@@ -20,13 +20,7 @@ const router = Router();
 router.get("/", getAll);
 router.post("/", empleadoDataValidator, notExistsDocumento, create);
 router.get("/:id", idValidator, getById);
-router.put(
-  "/:id",
-  empleadoIdValidator,
-  notExistsDocumento,
-  empleadoRLValidator,
-  update
-);
+router.put("/:id", empleadoIdValidator, empleadoRLValidator, update);
 router.delete("/:id", empleadoIdValidator, _delete);
 
 export default router;
